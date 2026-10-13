@@ -35,8 +35,8 @@ No MP names appear in the identity layer. Models run in bf16 with `transformers`
    - Partition `artxpro6000`, QoS `gpu-normal`, gres `gpu:rtx_pro_6000_2g.48gb:1`
    - Partition `aa100`, QoS `gpu-normal`, gres `gpu:a100-40gb:1`
    - Partition `al40`, QoS `gpu-normal`, gres `gpu:l40:1`
-3. Open this notebook from the cloned repo, keep `SMOKE = True`, **Run All** (first run installs packages into `/projects`, about 5 minutes,
-   and downloads the first model into `/scratch`). Send Claude the last cell's output.
+3. Open this notebook from the cloned repo, keep `SMOKE = True`, press **Run All once** and wait: the first run installs packages
+   (5 to 10 minutes, the cell prints each step) and downloads the first model into `/scratch`. Send Claude the last cell's output.
 4. Set `SMOKE = False`, **Run All** again. Every result is written line by line to `outputs/`, so a dropped session just resumes.
 5. Download `outputs/` (Files → select all → Download) and tell Claude where the zip landed.
 """)
@@ -78,17 +78,41 @@ if SMOKE:
 print('repo:', ROOT, '| smoke:', SMOKE, '| packages:', LIB, '| model cache:', os.environ['HF_HOME'])
 """)
 
-md("## 2. Python packages (first run only, about 5 minutes)")
+md(r"""
+## 2. Python packages (first run only, 5 to 10 minutes)
+Installs PyTorch and transformers into `/projects` and keeps every download cache in `/scratch`, because the home folder
+quota is only 2 GB. The cell prints each step; **keep it running and do not press Run All again** while it works.
+""")
 code(r"""
-def pip(*args):
-    subprocess.run([sys.executable, '-m', 'pip', 'install', '--quiet', '--no-warn-script-location',
-                    '--target', LIB, *args], check=True)
+import shutil
+for k, v in {'PIP_CACHE_DIR': 'pip_cache', 'TMPDIR': 'tmp', 'XDG_CACHE_HOME': 'xdg_cache',
+             'TORCH_HOME': 'torch_home', 'TRITON_CACHE_DIR': 'triton_cache'}.items():
+    os.environ[k] = f'{SCRATCH}/{v}'                           # nothing big ever lands in /home
+    Path(os.environ[k]).mkdir(parents=True, exist_ok=True)
 
-if not (Path(LIB) / 'transformers').exists():
+def pip(*args):
+    cmd = [sys.executable, '-m', 'pip', 'install', '--no-cache-dir', '--progress-bar', 'off',
+           '--no-warn-script-location', '--target', LIB, *args]
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True, env=os.environ.copy())
+    for line in p.stdout:
+        if line.startswith(('Collecting', 'Installing', 'Successfully', 'ERROR', 'error')):
+            print('   ', line.rstrip()[:150], flush=True)
+    if p.wait() != 0:
+        raise RuntimeError('pip failed, see the lines above')
+
+MARK = Path(LIB) / '.install_complete'
+if not MARK.exists():
+    if Path(LIB).exists():
+        print('removing an incomplete install from an earlier run:', LIB, flush=True)
+        shutil.rmtree(LIB, ignore_errors=True)
     Path(LIB).mkdir(parents=True, exist_ok=True)
+    t0 = time.time()
+    print(f'installing PyTorch and transformers into {LIB} (5 to 10 minutes) ...', flush=True)
     # one resolver pass; the CUDA 12.8 build of PyTorch runs on the Blackwell RTX PRO 6000 slices as well as A100 and L40
     pip('torch==2.7.1', 'transformers==4.55.4', 'accelerate==1.10.1', 'sentencepiece', 'protobuf', 'safetensors',
         'huggingface_hub', '--index-url', 'https://download.pytorch.org/whl/cu128', '--extra-index-url', 'https://pypi.org/simple')
+    MARK.write_text(time.strftime('%Y-%m-%d %H:%M'))
+    print(f'install finished in {(time.time() - t0) / 60:.1f} min', flush=True)
 sys.path.insert(0, LIB)
 import torch, transformers
 print('python', sys.version.split()[0], '| torch', torch.__version__, '| transformers', transformers.__version__)
