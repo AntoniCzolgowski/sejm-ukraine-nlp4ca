@@ -1,0 +1,133 @@
+{
+ "controls_post": [
+  {
+   "country": "Białoruś",
+   "n": 532,
+   "share_w": 0.083
+  },
+  {
+   "country": "Litwa",
+   "n": 353,
+   "share_w": 0.014
+  },
+  {
+   "country": "Słowacja",
+   "n": 133,
+   "share_w": 0.105
+  },
+  {
+   "country": "Ukraina",
+   "n": 3857,
+   "share_w": 0.31
+  },
+  {
+   "country": "Węgry",
+   "n": 201,
+   "share_w": 0.01
+  },
+  {
+   "country": "Łotwa",
+   "n": 93,
+   "share_w": 0.022
+  }
+ ],
+ "ua_by_period": [
+  {
+   "period": "post, KO-led gov",
+   "n": 1221,
+   "share_w": 0.326
+  },
+  {
+   "period": "post, PiS gov",
+   "n": 2636,
+   "share_w": 0.302
+  },
+  {
+   "period": "pre-invasion",
+   "n": 211,
+   "share_w": 0.014
+  }
+ ],
+ "ua_party_period": {
+  "KO|post, PiS gov": {
+   "n": 486,
+   "share_w": 0.465
+  },
+  "KO|post, KO-led gov": {
+   "n": 219,
+   "share_w": 0.562
+  },
+  "Konfederacja|post, PiS gov": {
+   "n": 98,
+   "share_w": 0.122
+  },
+  "Konfederacja|post, KO-led gov": {
+   "n": 100,
+   "share_w": 0.02
+  },
+  "Kukiz15|post, KO-led gov": {
+   "n": 14,
+   "share_w": 0.071
+  },
+  "Lewica|post, PiS gov": {
+   "n": 199,
+   "share_w": 0.608
+  },
+  "Lewica|post, KO-led gov": {
+   "n": 53,
+   "share_w": 0.792
+  },
+  "PSL|post, PiS gov": {
+   "n": 127,
+   "share_w": 0.205
+  },
+  "PSL|post, KO-led gov": {
+   "n": 146,
+   "share_w": 0.219
+  },
+  "PiS|post, PiS gov": {
+   "n": 1047,
+   "share_w": 0.165
+  },
+  "PiS|post, KO-led gov": {
+   "n": 296,
+   "share_w": 0.105
+  },
+  "Polska2050|post, KO-led gov": {
+   "n": 53,
+   "share_w": 0.472
+  },
+  "no club|post, PiS gov": {
+   "n": 679,
+   "share_w": 0.352
+  },
+  "no club|post, KO-led gov": {
+   "n": 340,
+   "share_w": 0.418
+  }
+ },
+ "prev_speaker": {
+  "odds_ratio": 1.63,
+  "ci": [
+   1.26,
+   2.1
+  ],
+  "n": 2456,
+  "raw": {
+   "na": {
+    "n": 1719,
+    "share_w": 0.265
+   },
+   "w": {
+    "n": 737,
+    "share_w": 0.364
+   }
+  }
+ },
+ "speakers5": {
+  "n": 230,
+  "always_na": 52,
+  "always_w": 15,
+  "mixed": 163
+ }
+}
