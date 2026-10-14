@@ -8,7 +8,8 @@ For every case we write the prompt pieces for five conditions:
   C3 flipped  : C2 with every w/na Ukrainie in the preceding speeches flipped
   C4 swapped  : C2 with the party label swapped to the other camp
 Pre-invasion cases (all "na") get C2 with the real date and C2 with the date moved +3 years (D1).
-The assistant message is pre-filled with the MP's real words up to the choice point; the notebook reads P(" w") vs P(" na").
+The assistant message is pre-filled with the MP's real words up to the choice point; src/score.py compares the full
+continuations " w Ukrainie" vs " na Ukrainie" (field cont, with the transcript's spacing and capitalisation).
 No MP names appear in any prompt.
 """
 import gzip, json, re, random, datetime as dt, unicodedata
@@ -134,12 +135,20 @@ def make_case(r, period, kind_tag):
     random.shuffle(smp)
     samples = [words_mid(x[1], 55) for x in smp[:2]]
     prefix = words_tail(t["text"][:r["offset"]].rstrip(), 150)
+    # the two continuations to score, exactly as they would sit in the transcript after the prefix:
+    # a space unless the form opens a quote („w Ukrainie”), and a capital after a full stop
+    before, said = t["text"][:r["offset"]], UA.match(t["text"], r["offset"])
+    assert said, (r["doc"], ti)
+    sep = " " if before[-1:].isspace() else ""
+    cap = said.group(1)[0].isupper()
+    cont = {"w": sep + ("W" if cap else "w") + " Ukrainie", "na": sep + ("Na" if cap else "na") + " Ukrainie"}
     ctx = context_block(turns, ti)
     base = dict(case_id=f"{r['doc']}#{ti}", doc=r["doc"], turn=ti, date=d["date"], term=d["term"], kind=d["kind"],
                 party=r["party"], period=period, set=kind_tag, sex=t.get("sex"), role=t["role"], real=r["prep"],
                 prev_other_form=r["prev_other_form"], has_bio=bool(mp), n_style=len(samples),
                 agenda_form=(UA.search(agenda).group(1).lower() if agenda and UA.search(agenda) else None),
-                context_forms=[m.group(1).lower() for m in UA.finditer(ctx)], prefix=prefix)
+                context_forms=[m.group(1).lower() for m in UA.finditer(ctx)], prefix=prefix, cont=cont,
+                quoted=bool(before) and before[-1] in "„\"«")   # the MP is quoting the form (talking about the word itself)
     sc = scene(meta, d["date"], agenda)
     sc_flip = scene(meta, d["date"], flip(agenda) if agenda else None)
     idn = identity(r["party"], t.get("sex"), t["role"], mp, samples)

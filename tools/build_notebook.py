@@ -14,8 +14,10 @@ In 4,068 real uses in the Sejm (Nov 2019 to Apr 2025), "w" went from about 1% be
 with a clear party gradient. This notebook asks whether LLM **agent MPs** make the same choice.
 
 For 893 real moments where an MP had to choose (806 after the invasion, 87 before), each model reads a prompt in four layers
-(scene, who you are, what was said right before in the room, your own speech up to the choice point) and we read its
-probability of **" w"** vs **" na"** as the next word. Conditions change one thing at a time:
+(scene, who you are, what was said right before in the room, your own speech up to the choice point) and we compare the
+probability it gives to the two full continuations, **" w Ukrainie"** vs **" na Ukrainie"**, written exactly as they would sit in
+the transcript. (Comparing only the next word, " w" vs " na", would also count "w Polsce" or "na froncie"; that number is
+kept as a secondary column.) Conditions change one thing at a time:
 
 | condition | what the agent gets |
 |---|---|
@@ -33,10 +35,10 @@ No MP names appear in the identity layer. The models run in bf16 with `transform
 1. https://ondemand.rc.colorado.edu → **Interactive Apps → Jupyter Session**
 2. **Custom configuration**, Cluster `alpine`, Account `ucb757_asc1`, QoS `gpu-normal`, Time `4`, cores `8`, and a GPU slice with
    **at least ~35 GB**: Partition `artxpro6000` + gres `gpu:rtx_pro_6000_2g.48gb:1`, or Partition `aa100` + gres `gpu:a100-40gb:1`.
-3. Open this notebook from the cloned repo, keep `SMOKE = True`, press **Run All once** and wait. The first run installs packages
-   (5 to 10 minutes) and downloads the first model into `/scratch`; every step prints a line. Send Claude the last cell's output.
-4. Set `SMOKE = False`, **Run All** again (about 1.5 to 2 hours). Results are written line by line to `outputs/`, so a dropped
-   session just resumes where it stopped.
+3. Open this notebook from the cloned repo. For a first test set `SMOKE = True` (8 cases, first model only), press **Run All once**
+   and wait. The first run installs packages (5 to 10 minutes) and downloads the models into `/scratch`; every step prints a line.
+4. With `SMOKE = False`, **Run All** once (about 1 to 1.5 hours with the models already downloaded). Results are written line by
+   line to `outputs/`, so a dropped session just resumes where it stopped.
 5. Download `outputs/` (Files → select all → Download) and tell Claude where the zip landed.
 """)
 
@@ -49,7 +51,7 @@ code(r"""
 
 md("## 1. Settings")
 code(r"""
-SMOKE = True                                   # True: 8 cases with the first model only. Then False and Run All.
+SMOKE = False                                  # True: a 3-minute test (8 cases, first model only)
 MODELS = ['bielik', 'pllum', 'mistral', 'qwen']  # Bielik 11B v2.3, PLLuM 12B, Mistral-Nemo 12B, Qwen3 14B (see src/score.py)
 BATCH = 4                                      # prompts per forward pass; halves itself on GPU out-of-memory
 
@@ -120,7 +122,7 @@ print(len(cases), 'cases in total |', sum(len(c['prompts']) for c in cases), 'pr
 ex = [c for c in cases if c['set'] == 'post'][0]
 print('\n--- example (C2_grounded), user message ---\n' + ex['prompts']['C2_grounded'][:1500] + ' ...')
 print('\n--- the reply is pre-filled with the real speech up to the choice point ---\n... ' + ex['prefix'][-300:])
-print('\nreal choice:', ex['real'])
+print('\nscored continuations:', ex['cont'], '| real choice:', ex['real'])
 """)
 
 md("## 4. Scoring and memorization check (separate process, prints progress)")
@@ -135,32 +137,14 @@ print(f'scoring cell finished in {(time.time() - t0) / 60:.1f} min')
 
 md("## 5. Quick look (the full analysis runs on Claude's side)")
 code(r"""
-from collections import defaultdict
-real = {c['case_id']: c for c in cases}
-for tag in MODELS:
-    path = OUT / f'scores_{tag}.jsonl'
-    if not path.exists():
-        continue
-    rows = [json.loads(l) for l in open(path)]
-    acc, by = defaultdict(list), defaultdict(list)
-    for r in rows:
-        c = real.get(r['case_id'])
-        if not c:
-            continue
-        acc[r['cond']].append((r['share_w'] > 0.5) == (c['real'] == 'w'))
-        by[(r['cond'], c['party'])].append(r['share_w'])
-    print(f'== {tag}: {len(rows)} scores | mean probability mass on w+na: {sum(r["mass"] for r in rows) / len(rows):.2f}')
-    for cond in sorted(acc):
-        print(f'   {cond:16s} agreement with the real MP: {sum(acc[cond]) / len(acc[cond]):.2f} (n={len(acc[cond])})')
-    print('   mean P(w) by party, C2_grounded: ' + ', '.join(f'{p} {sum(v) / len(v):.2f}' for (c_, p), v in sorted(by.items()) if c_ == 'C2_grounded'))
-for tag in MODELS:
-    path = OUT / f'memo_{tag}.jsonl'
-    if path.exists():
-        rows = [json.loads(l) for l in open(path)]
-        print(f'== {tag} memorization: ' + ', '.join(f"{g} Min-K% {sum(x['mink20'] for x in rows if x['group'] == g) / max(1, sum(1 for x in rows if x['group'] == g)):.3f}" for g in ('2022-23', '2025')))
+# the same summary score.py prints at the end; P(w) = P("w Ukrainie") / (P("w Ukrainie") + P("na Ukrainie"))
+sys.path.insert(0, str(ROOT / 'src'))
+import quicklook
+quicklook.main(MODELS, SMOKE)
 manifest = {'smoke': SMOKE, 'models': MODELS, 'finished': time.strftime('%Y-%m-%d %H:%M'), 'host': os.uname().nodename}
 json.dump(manifest, open(OUT / 'manifest.json', 'w'), indent=1)
 print('\nDONE', manifest)
+print('files to download:', sorted(p.name for p in OUT.iterdir()))
 """)
 
 nb = nbf.v4.new_notebook()

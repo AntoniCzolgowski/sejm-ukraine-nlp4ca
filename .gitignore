@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+# agent-run outputs stay on Alpine and are downloaded by hand (a git reset never touches them)
+outputs/probe_*.jsonl
+outputs/memo_*.jsonl
+outputs/scores_*.jsonl
+outputs/manifest.json

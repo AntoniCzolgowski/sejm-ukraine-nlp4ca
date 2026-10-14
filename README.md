@@ -21,14 +21,19 @@ The question: when LLM agents speak as these MPs, do they make the same choice, 
 
 ## Run (CU Alpine, Open OnDemand, no terminal)
 Open `notebooks/agents_alpine.ipynb` in a **Jupyter Session** on a GPU slice with at least ~35 GB (instructions at the top).
-Four open models in bf16 (Bielik 11B v2.3, PLLuM 12B, Mistral-Nemo 12B, Qwen3 14B) read each prompt and we record
-P(" w") vs P(" na") at the choice point. Every result is checkpointed in `outputs/`.
+Four open models in bf16 (Bielik 11B v2.3, PLLuM 12B, Mistral-Nemo 12B, Qwen3 14B) read each prompt and we compare the
+probability of the two full continuations, " w Ukrainie" vs " na Ukrainie", written as they would sit in the transcript
+(the next word alone would also count "w Polsce" or "na froncie"; that number is kept as a secondary column). The prompt's
+KV cache is reused for the two continuations, so this costs about one forward pass per prompt. Every result is checkpointed
+in `outputs/probe_<model>.jsonl` and `outputs/memo_<model>.jsonl`; `src/quicklook.py` prints a summary.
 
 ## Layout
 ```
 notebooks/agents_alpine.ipynb   agent probe on Alpine (scores + memorization check)
 src/extract_sejm.py             PPC TEI dumps -> data/sejm_matches.jsonl (+ debate turns for the prompts)
 src/build_cases.py              choice points -> prompts for C0-C4 and D1
+src/score.py                    agent probe on the GPU (called by the notebook)
+src/quicklook.py                summary of the probe outputs (standard library only)
 src/analyze_human.py            human-side tables, previous-speaker model, half-year series -> outputs/
 tools/build_notebook.py         regenerates the notebook
 ```
