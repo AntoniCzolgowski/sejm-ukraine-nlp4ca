@@ -1,0 +1,11 @@
+{
+ "smoke": false,
+ "models": [
+  "bielik",
+  "pllum",
+  "mistral",
+  "qwen"
+ ],
+ "finished": "2026-10-13 20:11",
+ "host": "c3gpu-e7-u9"
+}

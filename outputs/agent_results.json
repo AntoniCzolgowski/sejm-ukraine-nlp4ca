@@ -1,0 +1,952 @@
+{
+ "n_cases": 887,
+ "n_post": 800,
+ "n_pre": 87,
+ "bootstrap": 1000,
+ "models": {
+  "bielik": {
+   "C0_bare": {
+    "n": 800,
+    "mean_pw": 0.266,
+    "real_w": 0.331,
+    "accuracy": 0.672,
+    "brier": 0.221,
+    "auc_post": [
+     0.638,
+     0.591,
+     0.685
+    ],
+    "auc_post_next_word": 0.553,
+    "mean_pw_next_word": 0.388
+   },
+   "C1_party": {
+    "n": 800,
+    "mean_pw": 0.264,
+    "real_w": 0.331,
+    "accuracy": 0.691,
+    "brier": 0.207,
+    "auc_post": [
+     0.693,
+     0.641,
+     0.734
+    ],
+    "auc_post_next_word": 0.599,
+    "mean_pw_next_word": 0.383,
+    "within_party_auc": [
+     0.616,
+     0.544,
+     0.681
+    ]
+   },
+   "C2_grounded": {
+    "n": 887,
+    "mean_pw": 0.243,
+    "real_w": 0.301,
+    "accuracy": 0.715,
+    "brier": 0.19,
+    "auc_post": [
+     0.698,
+     0.65,
+     0.743
+    ],
+    "auc_post_next_word": 0.601,
+    "mean_pw_next_word": 0.381,
+    "within_party_auc": [
+     0.64,
+     0.575,
+     0.701
+    ]
+   },
+   "C3_flipped": {
+    "n": 800,
+    "mean_pw": 0.257,
+    "real_w": 0.331,
+    "accuracy": 0.684,
+    "brier": 0.208,
+    "auc_post": [
+     0.689,
+     0.645,
+     0.735
+    ],
+    "auc_post_next_word": 0.593,
+    "mean_pw_next_word": 0.377
+   },
+   "C4_swapped": {
+    "n": 800,
+    "mean_pw": 0.253,
+    "real_w": 0.331,
+    "accuracy": 0.655,
+    "brier": 0.235,
+    "auc_post": [
+     0.588,
+     0.543,
+     0.636
+    ],
+    "auc_post_next_word": 0.503,
+    "mean_pw_next_word": 0.375
+   },
+   "D1_date_plus3y": {
+    "n": 87,
+    "mean_pw": 0.138,
+    "real_w": 0.023,
+    "accuracy": 0.92,
+    "brier": 0.058,
+    "auc_post": null,
+    "auc_post_next_word": null,
+    "mean_pw_next_word": 0.438
+   },
+   "party_gradient": {
+    "table": {
+     "Lewica": {
+      "agent": 0.358,
+      "real": 0.672,
+      "n": 122.0,
+      "human_all": 0.647
+     },
+     "Polska2050": {
+      "agent": 0.319,
+      "real": 0.511,
+      "n": 47.0,
+      "human_all": 0.472
+     },
+     "KO": {
+      "agent": 0.338,
+      "real": 0.503,
+      "n": 159.0,
+      "human_all": 0.495
+     },
+     "PSL": {
+      "agent": 0.25,
+      "real": 0.281,
+      "n": 160.0,
+      "human_all": 0.212
+     },
+     "PiS": {
+      "agent": 0.197,
+      "real": 0.169,
+      "n": 160.0,
+      "human_all": 0.152
+     },
+     "Kukiz15": {
+      "agent": 0.237,
+      "real": 0.1,
+      "n": 10.0,
+      "human_all": 0.071
+     },
+     "Konfederacja": {
+      "agent": 0.138,
+      "real": 0.042,
+      "n": 142.0,
+      "human_all": 0.071
+     }
+    },
+    "spearman_rho": 0.964,
+    "logit_slope_vs_human": 0.312,
+    "agent_range": 0.22,
+    "human_range": 0.576
+   },
+   "context_flip": {
+    "n": 42,
+    "mean_logodds_shift": [
+     1.446,
+     0.774,
+     1.966
+    ],
+    "odds_ratio": [
+     4.25,
+     2.17,
+     7.14
+    ]
+   },
+   "party_swap": {
+    "n": 800,
+    "share_of_real_gap": [
+     0.181,
+     0.164,
+     0.202
+    ],
+    "by_pair": {
+     "KO->PiS": {
+      "n": 159,
+      "agent_shift": -0.453,
+      "real_gap": -1.7
+     },
+     "Konfederacja->Lewica": {
+      "n": 142,
+      "agent_shift": 0.435,
+      "real_gap": 3.181
+     },
+     "Kukiz15->Lewica": {
+      "n": 10,
+      "agent_shift": 0.112,
+      "real_gap": 3.17
+     },
+     "Lewica->Konfederacja": {
+      "n": 122,
+      "agent_shift": -0.528,
+      "real_gap": -3.181
+     },
+     "PSL->Lewica": {
+      "n": 160,
+      "agent_shift": 0.221,
+      "real_gap": 1.915
+     },
+     "PiS->KO": {
+      "n": 160,
+      "agent_shift": 0.428,
+      "real_gap": 1.7
+     },
+     "Polska2050->Konfederacja": {
+      "n": 47,
+      "agent_shift": -0.623,
+      "real_gap": -2.463
+     }
+    }
+   },
+   "date_shift": {
+    "n": 87,
+    "mean_logodds_shift": [
+     0.335,
+     0.206,
+     0.503
+    ],
+    "pw_real_date": 0.114,
+    "pw_plus3y": 0.138,
+    "human_pre_share": 0.014
+   },
+   "memorization": {
+    "mink20_2022_23": -4.826,
+    "mink20_2025": -4.869,
+    "diff": [
+     0.043,
+     -0.132,
+     0.231
+    ],
+    "n": [
+     120,
+     120
+    ]
+   },
+   "next_word_mass": 0.505
+  },
+  "pllum": {
+   "C0_bare": {
+    "n": 800,
+    "mean_pw": 0.339,
+    "real_w": 0.331,
+    "accuracy": 0.642,
+    "brier": 0.257,
+    "auc_post": [
+     0.61,
+     0.562,
+     0.654
+    ],
+    "auc_post_next_word": 0.537,
+    "mean_pw_next_word": 0.379
+   },
+   "C1_party": {
+    "n": 800,
+    "mean_pw": 0.335,
+    "real_w": 0.331,
+    "accuracy": 0.655,
+    "brier": 0.24,
+    "auc_post": [
+     0.647,
+     0.598,
+     0.691
+    ],
+    "auc_post_next_word": 0.577,
+    "mean_pw_next_word": 0.379,
+    "within_party_auc": [
+     0.572,
+     0.503,
+     0.645
+    ]
+   },
+   "C2_grounded": {
+    "n": 887,
+    "mean_pw": 0.305,
+    "real_w": 0.301,
+    "accuracy": 0.678,
+    "brier": 0.223,
+    "auc_post": [
+     0.644,
+     0.598,
+     0.687
+    ],
+    "auc_post_next_word": 0.576,
+    "mean_pw_next_word": 0.369,
+    "within_party_auc": [
+     0.579,
+     0.512,
+     0.647
+    ]
+   },
+   "C3_flipped": {
+    "n": 800,
+    "mean_pw": 0.327,
+    "real_w": 0.331,
+    "accuracy": 0.641,
+    "brier": 0.245,
+    "auc_post": [
+     0.628,
+     0.576,
+     0.675
+    ],
+    "auc_post_next_word": 0.567,
+    "mean_pw_next_word": 0.369
+   },
+   "C4_swapped": {
+    "n": 800,
+    "mean_pw": 0.318,
+    "real_w": 0.331,
+    "accuracy": 0.627,
+    "brier": 0.258,
+    "auc_post": [
+     0.59,
+     0.545,
+     0.633
+    ],
+    "auc_post_next_word": 0.521,
+    "mean_pw_next_word": 0.363
+   },
+   "D1_date_plus3y": {
+    "n": 87,
+    "mean_pw": 0.189,
+    "real_w": 0.023,
+    "accuracy": 0.897,
+    "brier": 0.089,
+    "auc_post": null,
+    "auc_post_next_word": null,
+    "mean_pw_next_word": 0.422
+   },
+   "party_gradient": {
+    "table": {
+     "Lewica": {
+      "agent": 0.425,
+      "real": 0.672,
+      "n": 122.0,
+      "human_all": 0.647
+     },
+     "Polska2050": {
+      "agent": 0.445,
+      "real": 0.511,
+      "n": 47.0,
+      "human_all": 0.472
+     },
+     "KO": {
+      "agent": 0.395,
+      "real": 0.503,
+      "n": 159.0,
+      "human_all": 0.495
+     },
+     "PSL": {
+      "agent": 0.319,
+      "real": 0.281,
+      "n": 160.0,
+      "human_all": 0.212
+     },
+     "PiS": {
+      "agent": 0.264,
+      "real": 0.169,
+      "n": 160.0,
+      "human_all": 0.152
+     },
+     "Kukiz15": {
+      "agent": 0.111,
+      "real": 0.1,
+      "n": 10.0,
+      "human_all": 0.071
+     },
+     "Konfederacja": {
+      "agent": 0.186,
+      "real": 0.042,
+      "n": 142.0,
+      "human_all": 0.071
+     }
+    },
+    "spearman_rho": 0.857,
+    "logit_slope_vs_human": 0.492,
+    "agent_range": 0.334,
+    "human_range": 0.576
+   },
+   "context_flip": {
+    "n": 42,
+    "mean_logodds_shift": [
+     2.103,
+     1.632,
+     2.636
+    ],
+    "odds_ratio": [
+     8.19,
+     5.11,
+     13.96
+    ]
+   },
+   "party_swap": {
+    "n": 800,
+    "share_of_real_gap": [
+     0.133,
+     0.117,
+     0.152
+    ],
+    "by_pair": {
+     "KO->PiS": {
+      "n": 159,
+      "agent_shift": -0.245,
+      "real_gap": -1.7
+     },
+     "Konfederacja->Lewica": {
+      "n": 142,
+      "agent_shift": 0.349,
+      "real_gap": 3.181
+     },
+     "Kukiz15->Lewica": {
+      "n": 10,
+      "agent_shift": 0.311,
+      "real_gap": 3.17
+     },
+     "Lewica->Konfederacja": {
+      "n": 122,
+      "agent_shift": -0.407,
+      "real_gap": -3.181
+     },
+     "PSL->Lewica": {
+      "n": 160,
+      "agent_shift": 0.123,
+      "real_gap": 1.915
+     },
+     "PiS->KO": {
+      "n": 160,
+      "agent_shift": 0.371,
+      "real_gap": 1.7
+     },
+     "Polska2050->Konfederacja": {
+      "n": 47,
+      "agent_shift": -0.513,
+      "real_gap": -2.463
+     }
+    }
+   },
+   "date_shift": {
+    "n": 87,
+    "mean_logodds_shift": [
+     0.438,
+     0.312,
+     0.569
+    ],
+    "pw_real_date": 0.16,
+    "pw_plus3y": 0.189,
+    "human_pre_share": 0.014
+   },
+   "memorization": {
+    "mink20_2022_23": -6.134,
+    "mink20_2025": -6.354,
+    "diff": [
+     0.219,
+     -0.02,
+     0.453
+    ],
+    "n": [
+     120,
+     120
+    ]
+   },
+   "next_word_mass": 0.467
+  },
+  "mistral": {
+   "C0_bare": {
+    "n": 800,
+    "mean_pw": 0.43,
+    "real_w": 0.331,
+    "accuracy": 0.583,
+    "brier": 0.267,
+    "auc_post": [
+     0.588,
+     0.547,
+     0.628
+    ],
+    "auc_post_next_word": 0.549,
+    "mean_pw_next_word": 0.612
+   },
+   "C1_party": {
+    "n": 800,
+    "mean_pw": 0.42,
+    "real_w": 0.331,
+    "accuracy": 0.581,
+    "brier": 0.26,
+    "auc_post": [
+     0.599,
+     0.563,
+     0.639
+    ],
+    "auc_post_next_word": 0.557,
+    "mean_pw_next_word": 0.603,
+    "within_party_auc": [
+     0.58,
+     0.51,
+     0.654
+    ]
+   },
+   "C2_grounded": {
+    "n": 887,
+    "mean_pw": 0.39,
+    "real_w": 0.301,
+    "accuracy": 0.608,
+    "brier": 0.252,
+    "auc_post": [
+     0.584,
+     0.546,
+     0.625
+    ],
+    "auc_post_next_word": 0.552,
+    "mean_pw_next_word": 0.59,
+    "within_party_auc": [
+     0.575,
+     0.5,
+     0.641
+    ]
+   },
+   "C3_flipped": {
+    "n": 800,
+    "mean_pw": 0.408,
+    "real_w": 0.331,
+    "accuracy": 0.571,
+    "brier": 0.271,
+    "auc_post": [
+     0.569,
+     0.527,
+     0.608
+    ],
+    "auc_post_next_word": 0.541,
+    "mean_pw_next_word": 0.591
+   },
+   "C4_swapped": {
+    "n": 800,
+    "mean_pw": 0.406,
+    "real_w": 0.331,
+    "accuracy": 0.575,
+    "brier": 0.27,
+    "auc_post": [
+     0.574,
+     0.531,
+     0.612
+    ],
+    "auc_post_next_word": 0.543,
+    "mean_pw_next_word": 0.589
+   },
+   "D1_date_plus3y": {
+    "n": 87,
+    "mean_pw": 0.277,
+    "real_w": 0.023,
+    "accuracy": 0.828,
+    "brier": 0.137,
+    "auc_post": null,
+    "auc_post_next_word": null,
+    "mean_pw_next_word": 0.612
+   },
+   "party_gradient": {
+    "table": {
+     "Lewica": {
+      "agent": 0.448,
+      "real": 0.672,
+      "n": 122.0,
+      "human_all": 0.647
+     },
+     "Polska2050": {
+      "agent": 0.448,
+      "real": 0.511,
+      "n": 47.0,
+      "human_all": 0.472
+     },
+     "KO": {
+      "agent": 0.394,
+      "real": 0.503,
+      "n": 159.0,
+      "human_all": 0.495
+     },
+     "PSL": {
+      "agent": 0.402,
+      "real": 0.281,
+      "n": 160.0,
+      "human_all": 0.212
+     },
+     "PiS": {
+      "agent": 0.404,
+      "real": 0.169,
+      "n": 160.0,
+      "human_all": 0.152
+     },
+     "Kukiz15": {
+      "agent": 0.356,
+      "real": 0.1,
+      "n": 10.0,
+      "human_all": 0.071
+     },
+     "Konfederacja": {
+      "agent": 0.366,
+      "real": 0.042,
+      "n": 142.0,
+      "human_all": 0.071
+     }
+    },
+    "spearman_rho": 0.714,
+    "logit_slope_vs_human": 0.1,
+    "agent_range": 0.092,
+    "human_range": 0.576
+   },
+   "context_flip": {
+    "n": 42,
+    "mean_logodds_shift": [
+     2.994,
+     2.09,
+     3.881
+    ],
+    "odds_ratio": [
+     19.97,
+     8.08,
+     48.47
+    ]
+   },
+   "party_swap": {
+    "n": 800,
+    "share_of_real_gap": [
+     0.024,
+     0.019,
+     0.03
+    ],
+    "by_pair": {
+     "KO->PiS": {
+      "n": 159,
+      "agent_shift": -0.047,
+      "real_gap": -1.7
+     },
+     "Konfederacja->Lewica": {
+      "n": 142,
+      "agent_shift": 0.06,
+      "real_gap": 3.181
+     },
+     "Kukiz15->Lewica": {
+      "n": 10,
+      "agent_shift": 0.073,
+      "real_gap": 3.17
+     },
+     "Lewica->Konfederacja": {
+      "n": 122,
+      "agent_shift": -0.053,
+      "real_gap": -3.181
+     },
+     "PSL->Lewica": {
+      "n": 160,
+      "agent_shift": 0.057,
+      "real_gap": 1.915
+     },
+     "PiS->KO": {
+      "n": 160,
+      "agent_shift": 0.069,
+      "real_gap": 1.7
+     },
+     "Polska2050->Konfederacja": {
+      "n": 47,
+      "agent_shift": -0.029,
+      "real_gap": -2.463
+     }
+    }
+   },
+   "date_shift": {
+    "n": 87,
+    "mean_logodds_shift": [
+     0.123,
+     0.047,
+     0.202
+    ],
+    "pw_real_date": 0.264,
+    "pw_plus3y": 0.277,
+    "human_pre_share": 0.014
+   },
+   "memorization": {
+    "mink20_2022_23": -7.39,
+    "mink20_2025": -7.4,
+    "diff": [
+     0.011,
+     -0.162,
+     0.184
+    ],
+    "n": [
+     120,
+     120
+    ]
+   },
+   "next_word_mass": 0.48
+  },
+  "qwen": {
+   "C0_bare": {
+    "n": 800,
+    "mean_pw": 0.417,
+    "real_w": 0.331,
+    "accuracy": 0.57,
+    "brier": 0.282,
+    "auc_post": [
+     0.56,
+     0.514,
+     0.604
+    ],
+    "auc_post_next_word": 0.483,
+    "mean_pw_next_word": 0.618
+   },
+   "C1_party": {
+    "n": 800,
+    "mean_pw": 0.406,
+    "real_w": 0.331,
+    "accuracy": 0.566,
+    "brier": 0.279,
+    "auc_post": [
+     0.563,
+     0.518,
+     0.609
+    ],
+    "auc_post_next_word": 0.488,
+    "mean_pw_next_word": 0.607,
+    "within_party_auc": [
+     0.545,
+     0.482,
+     0.615
+    ]
+   },
+   "C2_grounded": {
+    "n": 887,
+    "mean_pw": 0.391,
+    "real_w": 0.301,
+    "accuracy": 0.56,
+    "brier": 0.277,
+    "auc_post": [
+     0.562,
+     0.513,
+     0.606
+    ],
+    "auc_post_next_word": 0.493,
+    "mean_pw_next_word": 0.606,
+    "within_party_auc": [
+     0.54,
+     0.481,
+     0.602
+    ]
+   },
+   "C3_flipped": {
+    "n": 800,
+    "mean_pw": 0.391,
+    "real_w": 0.331,
+    "accuracy": 0.556,
+    "brier": 0.281,
+    "auc_post": [
+     0.549,
+     0.503,
+     0.592
+    ],
+    "auc_post_next_word": 0.48,
+    "mean_pw_next_word": 0.593
+   },
+   "C4_swapped": {
+    "n": 800,
+    "mean_pw": 0.391,
+    "real_w": 0.331,
+    "accuracy": 0.565,
+    "brier": 0.28,
+    "auc_post": [
+     0.551,
+     0.502,
+     0.597
+    ],
+    "auc_post_next_word": 0.481,
+    "mean_pw_next_word": 0.595
+   },
+   "D1_date_plus3y": {
+    "n": 87,
+    "mean_pw": 0.396,
+    "real_w": 0.023,
+    "accuracy": 0.598,
+    "brier": 0.274,
+    "auc_post": null,
+    "auc_post_next_word": null,
+    "mean_pw_next_word": 0.728
+   },
+   "party_gradient": {
+    "table": {
+     "Lewica": {
+      "agent": 0.47,
+      "real": 0.672,
+      "n": 122.0,
+      "human_all": 0.647
+     },
+     "Polska2050": {
+      "agent": 0.448,
+      "real": 0.511,
+      "n": 47.0,
+      "human_all": 0.472
+     },
+     "KO": {
+      "agent": 0.356,
+      "real": 0.503,
+      "n": 159.0,
+      "human_all": 0.495
+     },
+     "PSL": {
+      "agent": 0.398,
+      "real": 0.281,
+      "n": 160.0,
+      "human_all": 0.212
+     },
+     "PiS": {
+      "agent": 0.386,
+      "real": 0.169,
+      "n": 160.0,
+      "human_all": 0.152
+     },
+     "Kukiz15": {
+      "agent": 0.281,
+      "real": 0.1,
+      "n": 10.0,
+      "human_all": 0.071
+     },
+     "Konfederacja": {
+      "agent": 0.339,
+      "real": 0.042,
+      "n": 142.0,
+      "human_all": 0.071
+     }
+    },
+    "spearman_rho": 0.75,
+    "logit_slope_vs_human": 0.173,
+    "agent_range": 0.19,
+    "human_range": 0.576
+   },
+   "context_flip": {
+    "n": 42,
+    "mean_logodds_shift": [
+     2.01,
+     1.278,
+     2.664
+    ],
+    "odds_ratio": [
+     7.46,
+     3.59,
+     14.35
+    ]
+   },
+   "party_swap": {
+    "n": 800,
+    "share_of_real_gap": [
+     0.033,
+     0.027,
+     0.039
+    ],
+    "by_pair": {
+     "KO->PiS": {
+      "n": 159,
+      "agent_shift": -0.079,
+      "real_gap": -1.7
+     },
+     "Konfederacja->Lewica": {
+      "n": 142,
+      "agent_shift": 0.049,
+      "real_gap": 3.181
+     },
+     "Kukiz15->Lewica": {
+      "n": 10,
+      "agent_shift": 0.133,
+      "real_gap": 3.17
+     },
+     "Lewica->Konfederacja": {
+      "n": 122,
+      "agent_shift": -0.08,
+      "real_gap": -3.181
+     },
+     "PSL->Lewica": {
+      "n": 160,
+      "agent_shift": 0.067,
+      "real_gap": 1.915
+     },
+     "PiS->KO": {
+      "n": 160,
+      "agent_shift": 0.102,
+      "real_gap": 1.7
+     },
+     "Polska2050->Konfederacja": {
+      "n": 47,
+      "agent_shift": -0.057,
+      "real_gap": -2.463
+     }
+    }
+   },
+   "date_shift": {
+    "n": 87,
+    "mean_logodds_shift": [
+     -0.039,
+     -0.13,
+     0.068
+    ],
+    "pw_real_date": 0.405,
+    "pw_plus3y": 0.396,
+    "human_pre_share": 0.014
+   },
+   "memorization": {
+    "mink20_2022_23": -7.069,
+    "mink20_2025": -7.053,
+    "diff": [
+     -0.016,
+     -0.188,
+     0.172
+    ],
+    "n": [
+     120,
+     120
+    ]
+   },
+   "next_word_mass": 0.468
+  }
+ },
+ "baselines": {
+  "base_party": {
+   "label": "party x government rate (human data, leave-one-out)",
+   "n": 800,
+   "auc_post": [
+    0.736,
+    0.683,
+    0.784
+   ],
+   "within_party_auc": null
+  },
+  "base_own": {
+   "label": "the MP's own earlier uses",
+   "n": 625,
+   "auc_post": [
+    0.82,
+    0.772,
+    0.863
+   ],
+   "within_party_auc": [
+    0.69,
+    0.605,
+    0.746
+   ]
+  }
+ },
+ "human": {
+  "odds_ratio": 1.63,
+  "ci": [
+   1.26,
+   2.1
+  ],
+  "n": 2456,
+  "raw": {
+   "na": {
+    "n": 1719,
+    "share_w": 0.265
+   },
+   "w": {
+    "n": 737,
+    "share_w": 0.364
+   }
+  }
+ }
+}

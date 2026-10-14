@@ -39,7 +39,7 @@ No MP names appear in the identity layer. The models run in bf16 with `transform
    and wait. The first run installs packages (5 to 10 minutes) and downloads the models into `/scratch`; every step prints a line.
 4. With `SMOKE = False`, **Run All** once (about 1 to 1.5 hours with the models already downloaded). Results are written line by
    line to `outputs/`, so a dropped session just resumes where it stopped.
-5. Download `outputs/` (Files → select all → Download) and tell Claude where the zip landed.
+5. Download `outputs/` (Files → select all → Download) and copy the run files into `results/` for `src/analyze_agents.py`.
 """)
 
 code(r"""
@@ -135,7 +135,7 @@ run(cmd, env=ENV)
 print(f'scoring cell finished in {(time.time() - t0) / 60:.1f} min')
 """)
 
-md("## 5. Quick look (the full analysis runs on Claude's side)")
+md("## 5. Quick look (full analysis: src/analyze_agents.py)")
 code(r"""
 # the same summary score.py prints at the end; P(w) = P("w Ukrainie") / (P("w Ukrainie") + P("na Ukrainie"))
 sys.path.insert(0, str(ROOT / 'src'))

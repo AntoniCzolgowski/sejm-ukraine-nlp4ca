@@ -34,6 +34,8 @@ src/extract_sejm.py             PPC TEI dumps -> data/sejm_matches.jsonl (+ deba
 src/build_cases.py              choice points -> prompts for C0-C4 and D1
 src/score.py                    agent probe on the GPU (called by the notebook)
 src/quicklook.py                summary of the probe outputs (standard library only)
+src/analyze_agents.py           agent vs human analysis (bootstrap CIs, baselines, experiments) -> outputs/agent_*
+results/agent_run_2026-10-13/   raw agent scores and memorization check from the Alpine run
 src/analyze_human.py            human-side tables, previous-speaker model, half-year series -> outputs/
 tools/build_notebook.py         regenerates the notebook
 ```
