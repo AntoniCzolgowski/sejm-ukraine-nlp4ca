@@ -220,7 +220,12 @@ def main():
     empty = [c['case_id'] for c in cases if not c['prefix'].strip()]
     cases = [c for c in cases if c['prefix'].strip()]          # a choice at the very first word has nothing to continue
     if a.smoke:
-        cases = [c for c in cases if c['set'] == 'post'][:6] + [c for c in cases if c['set'] == 'pre'][:2]
+        # one real "w" and one real "na" speech per party after the invasion, plus two from before it
+        pick = {}
+        for c in cases:
+            if c['set'] == 'post' and not c['quoted']:
+                pick.setdefault((c['party'], c['real']), c)
+        cases = list(pick.values()) + [c for c in cases if c['set'] == 'pre'][:2]
     jobs = [(c['case_id'], cond, user, c['prefix'], c['cont']) for c in cases for cond, user in c['prompts'].items()]
     say(f'{len(cases)} cases | {len(jobs)} prompts per model' + (f' | skipped {len(empty)} with no words before the choice' if empty else ''))
     models = a.models.split(',')

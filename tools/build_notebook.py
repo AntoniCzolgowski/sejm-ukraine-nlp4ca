@@ -35,7 +35,7 @@ No MP names appear in the identity layer. The models run in bf16 with `transform
 1. https://ondemand.rc.colorado.edu → **Interactive Apps → Jupyter Session**
 2. **Custom configuration**, Cluster `alpine`, Account `ucb757_asc1`, QoS `gpu-normal`, Time `4`, cores `8`, and a GPU slice with
    **at least ~35 GB**: Partition `artxpro6000` + gres `gpu:rtx_pro_6000_2g.48gb:1`, or Partition `aa100` + gres `gpu:a100-40gb:1`.
-3. Open this notebook from the cloned repo. For a first test set `SMOKE = True` (8 cases, first model only), press **Run All once**
+3. Open this notebook from the cloned repo. For a first test set `SMOKE = True` (one real "w" and one real "na" speech per party, first model only), press **Run All once**
    and wait. The first run installs packages (5 to 10 minutes) and downloads the models into `/scratch`; every step prints a line.
 4. With `SMOKE = False`, **Run All** once (about 1 to 1.5 hours with the models already downloaded). Results are written line by
    line to `outputs/`, so a dropped session just resumes where it stopped.
@@ -51,7 +51,7 @@ code(r"""
 
 md("## 1. Settings")
 code(r"""
-SMOKE = False                                  # True: a 3-minute test (8 cases, first model only)
+SMOKE = False                                  # True: a 3-minute test (one w and one na speech per party, first model only)
 MODELS = ['bielik', 'pllum', 'mistral', 'qwen']  # Bielik 11B v2.3, PLLuM 12B, Mistral-Nemo 12B, Qwen3 14B (see src/score.py)
 BATCH = 4                                      # prompts per forward pass; halves itself on GPU out-of-memory
 
