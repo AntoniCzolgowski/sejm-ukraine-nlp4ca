@@ -1,4 +1,4 @@
-# W czy na Ukrainie? LLM agent MPs and a convention that split the Polish Sejm
+# W or na Ukrainie? LLM agent MPs and a convention that split the Polish Sejm
 
 Feasibility test for proposal 2 in *NLP for Cultural Analytics* (CSCI 7000, CU Boulder, Fall 2026).
 
