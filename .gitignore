@@ -6,3 +6,6 @@ outputs/probe_*.jsonl
 outputs/memo_*.jsonl
 outputs/scores_*.jsonl
 outputs/manifest.json
+proposal/*
+!proposal/fig1.pdf
+!proposal/fig1.png
