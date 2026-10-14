@@ -62,7 +62,7 @@ for m, col in MCOL.items():
            markeredgecolor='white', markeredgewidth=0.4)
 b.set_xticks(list(xs)); b.set_xticklabels(labels, fontsize=6.3)
 b.set_xlim(-0.4, len(order) - 0.6)
-b.set_title('(b) Agent MPs (grounded prompt) vs real MPs, after the invasion', loc='left', fontsize=8, color=INK)
+b.set_title('(b) Agent MPs (full prompt, C2) vs real MPs, after the invasion', loc='left', fontsize=8, color=INK)
 b.legend(loc='upper right', fontsize=6.5, handlelength=1.6, labelspacing=0.25, ncol=1)
 
 fig.savefig(OUT / 'fig1.pdf', bbox_inches='tight', pad_inches=0.02)
