@@ -1,7 +1,7 @@
 """Agent probe for proposal 2: P(" w") vs P(" na") at each real choice point, plus a memorization check.
 
 Run from the notebook in a separate Python process (clean imports, packages from P2_LIB on PYTHONPATH):
-    python src/score.py --models bielik,pllum,mistral,qwen [--smoke] [--batch 4]
+    python -S src/score.py --models bielik,pllum,mistral,qwen [--smoke] [--batch 4]
 Writes outputs/scores_<model>.jsonl and outputs/memo_<model>.jsonl line by line, so a stopped run resumes.
 """
 import argparse, gc, json, math, os, sys, time

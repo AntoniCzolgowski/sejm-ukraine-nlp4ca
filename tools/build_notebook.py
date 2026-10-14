@@ -107,9 +107,9 @@ if not MARK.exists():
     print(f'install finished in {(time.time() - t0) / 60:.1f} min', flush=True)
 
 ENV = os.environ.copy()
-ENV['PYTHONPATH'] = LIB                     # the scoring process sees our packages first
-ENV['PYTHONNOUSERSITE'] = '1'
-run([sys.executable, '-c', 'import torch, transformers; print("torch", torch.__version__, "| transformers", transformers.__version__, '
+ENV['PYTHONPATH'] = LIB                     # the scoring process sees only our packages:
+ENV['PYTHONNOUSERSITE'] = '1'               # python -S leaves Anaconda's site-packages (old numpy, scipy, sklearn) out entirely
+run([sys.executable, '-S', '-c', 'import torch, transformers; print("torch", torch.__version__, "| transformers", transformers.__version__, '
      '"| GPU:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "NONE")'], env=ENV)
 """)
 
@@ -126,7 +126,7 @@ print('\nreal choice:', ex['real'])
 md("## 4. Scoring and memorization check (separate process, prints progress)")
 code(r"""
 t0 = time.time()
-cmd = [sys.executable, '-u', str(ROOT / 'src' / 'score.py'), '--models', ','.join(MODELS), '--batch', str(BATCH)]
+cmd = [sys.executable, '-S', '-u', str(ROOT / 'src' / 'score.py'), '--models', ','.join(MODELS), '--batch', str(BATCH)]
 if SMOKE:
     cmd.append('--smoke')
 run(cmd, env=ENV)
