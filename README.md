@@ -1,4 +1,4 @@
-# Can LLM Agent MPs Reproduce a Language Convention That Split the Polish Parliament?
+# Can LLM Agent MPs Reproduce a Language Convention That Split the Parliament?
 
 **A real-world test for agent simulations of social conventions.** Proposal 2 for *NLP for Cultural Analytics*
 (CSCI 7000, CU Boulder, Fall 2026). The submitted proposal is in [`proposal/`](proposal/).
