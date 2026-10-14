@@ -9,3 +9,5 @@ outputs/manifest.json
 proposal/*
 !proposal/fig1.pdf
 !proposal/fig1.png
+!proposal/main.tex
+!proposal/Czolgowski_NLP4CA_Proposal2.pdf
